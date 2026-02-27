@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, My Dearest!</title>
+    <style>
+        /* CORE DESIGN SYSTEM & GLOBAL STYLES */
+        :root {
+            --primary-color: #FFA7C4; /* Soft Pink */
+            --secondary-color: #A7D8FF; /* Sky Blue */
+            --background-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --card-background: #2a2a2a;
+            --font-primary: 'Garamond', serif;
+            --font-secondary: 'Helvetica Neue', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: var(--font-primary);
+            font-weight: 300;
+        }
+
+        h1 {
+            font-size: 5rem;
+            color: var(--primary-color);
+        }
+
+        h2 {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        /* Layout */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* HERO SECTION */
+        #hero {
+            justify-content: center;
+            text-align: center;
+        }
+
+        .arrow {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-20px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+
+        /* LETTER SECTION */
+        #letter {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .typing-container {
+            border-left: 3px solid var(--primary-color);
+            padding-left: 15px;
+            white-space: pre-wrap; /* Allows wrapping */
+            word-wrap: break-word;
+        }
+        
+        /* MEMORY LANE */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .memory-card {
+            background: var(--card-background);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .memory-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .memory-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .memory-card p {
+            padding: 15px;
+            font-size: 1rem;
+        }
+        
+        /* REASONS SECTION */
+        .reasons-list {
+            list-style: none;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .reason-item {
+            background: var(--card-background);
+            margin: 10px 0;
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .reason-item:hover {
+            background: #3a3a3a;
+        }
+
+        /* PLAYLIST SECTION */
+        .playlist-container {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        /* COUPON SECTION */
+        .coupon-book {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .coupon {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            padding: 20px 40px;
+            border-radius: 10px;
+            font-family: var(--font-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .coupon:hover {
+            transform: rotate(5deg);
+        }
+        
+        /* CRYSTAL BALL */
+        .crystal-ball-container {
+            text-align: center;
+        }
+        
+        .crystal-ball {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #A7D8FF, #6c92ff);
+            border-radius: 50%;
+            margin: 2rem auto;
+            cursor: pointer;
+            animation: float 4s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .crystal-ball::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 20%;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            filter: blur(5px);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        #future-wish {
+            margin-top: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            min-height: 2rem;
+        }
+        
+        /* FINAL MESSAGE */
+        .cta-button {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* MUSIC PLAYER */
+        #music-player {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="section">
+        <h1>Happy Birthday,<br>[Her Name]</h1>
+        <p>A journey for you begins now...</p>
+        <div class="arrow">
+            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- PERSONALIZED LETTER SECTION -->
+    <section id="letter" class="section">
+        <h2>A Letter For You</h2>
+        <div class="typing-container">
+            <p id="letter-text"></p>
+        </div>
+    </section>
+
+    <!-- MEMORY LANE SECTION -->
+    <section id="memories" class="section">
+        <h2>A Journey Through Our Moments</h2>
+        <div class="gallery">
+            <!-- Replace with your images and captions -->
+            <div class="memory-card">
+                <img src="https://via.placeholder.com/300x200" alt="Memory 1">
+                <p>That unforgettable trip to the beach.</p>
+            </div>
+            <div class="memory-card">
+                <img src="https://via.placeholder.com/300x200" alt="Memory 2">
+                <p>Our first concert together.</p>
+            </div>
+            <div class="memory-card">
+                <img src="https://via.placeholder.com/300x200" alt="Memory 3">
+                <p>That time we cooked dinner and almost burnt the kitchen!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- REASONS I ADORE YOU SECTION -->
+    <section id="reasons" class="section">
+        <h2>Reasons I Adore You</h2>
+        <ul class="reasons-list">
+            <li class="reason-item">Your infectious laughter.</li>
+            <li class="reason-item">The way you care for everyone around you.</li>
+            <li class="reason-item">Your incredible strength and resilience.</li>
+            <li class="reason-item">How your eyes light up when you talk about your passions.</li>
+        </ul>
+    </section>
+
+    <!-- INTERACTIVE PLAYLIST SECTION -->
+    <section id="playlist" class="section">
+        <h2>Our Soundtrack</h2>
+        <div class="playlist-container">
+            <p>A collection of songs that remind me of you and us.</p>
+            <!-- Replace with your Spotify/Apple Music playlist embed -->
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+    </section>
+    
+    <!-- CUSTOMIZABLE COUPON BOOK SECTION -->
+    <section id="coupons" class="section">
+        <h2>A Gift For The Future</h2>
+        <div class="coupon-book">
+            <div class="coupon">One Movie Night of Your Choice</div>
+            <div class="coupon">A Home-Cooked Dinner by Me</div>
+            <div class="coupon">An Uninterrupted Afternoon Nap</div>
+        </div>
+    </section>
+
+    <!-- WHAT THE FUTURE HOLDS SECTION -->
+    <section id="future" class="section">
+        <h2>What The Future Holds</h2>
+        <div class="crystal-ball-container">
+            <div class="crystal-ball" id="crystal-ball"></div>
+            <p id="future-wish">Click the crystal ball to see a wish for your future!</p>
+        </div>
+    </section>
+
+    <!-- FINAL HEARTFELT MESSAGE & CTA SECTION -->
+    <section id="final-message" class="section">
+        <h2>My Final Wish For You</h2>
+        <p style="text-align:center; max-width: 600px;">May your year be filled with as much joy as you bring to everyone around you. I can't wait to see what amazing things you'll do. <br><br>With all my love,<br>[Your Name]</p>
+        <br>
+        <a href="tel:0123456789" class="cta-button">Call me when you're done :)</a>
+    </section>
+    
+    <!-- BACKGROUND MUSIC -->
+    <div id="music-player">
+        <audio id="background-music" loop>
+            <!-- Replace with your music file -->
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <button onclick="toggleMusic()">Play/Pause Music</button>
+    </div>
+
+    <script>
+        // Smooth scrolling for all sections
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Typing animation
+            const letterText = `My Dearest [Her Name],
+
+As I sit down to write this, I find myself at a loss for words that can truly capture how much you mean to me. It feels like just yesterday we met, and yet I can't imagine a world without you in it.
+
+This is just a small token to celebrate you – the incredible person you are. Happy Birthday, my love.`;
+            let i = 0;
+            const typing = () => {
+                if (i < letterText.length) {
+                    document.getElementById('letter-text').innerHTML += letterText.charAt(i);
+                    i++;
+                    setTimeout(typing, 50);
+                }
+            }
+            
+            // Fading in sections on scroll
+            const sections = document.querySelectorAll('.section');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        if (entry.target.id === 'letter' && i === 0) {
+                            typing();
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Crystal Ball wishes
+            const wishes = [
+                "A year of endless laughter.",
+                "Success in all your endeavors.",
+                "Adventures that become cherished memories.",
+                "Peace, happiness, and all the love you deserve."
+            ];
+            let wishIndex = 0;
+            document.getElementById('crystal-ball').addEventListener('click', () => {
+                document.getElementById('future-wish').innerText = wishes[wishIndex];
+                wishIndex = (wishIndex + 1) % wishes.length;
+            });
+        });
+
+        // Music player
+        const music = document.getElementById('background-music');
+        function toggleMusic() {
+            music.paused ? music.play() : music.pause();
+        }
+    </script>
+</body>
+</html>
